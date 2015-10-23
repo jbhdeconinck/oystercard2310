@@ -17,6 +17,10 @@ class JourneyLog
     journeys.last.end_journey(station)  # => :station
   end
 
+  def show_journeys
+    @journeys.dup
+  end
+
 end
 
 log = JourneyLog.new         # => #<JourneyLog:0x007ff72a95b1f8 @journey_klass=Journey, @journeys=[]>
