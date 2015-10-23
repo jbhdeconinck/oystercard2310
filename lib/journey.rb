@@ -6,7 +6,7 @@ MIN_FARE = 1         # => 1
 DEFAULT_PENALTY = 6  # => 6
 
 def initialize(station=nil)
-  @entry_station = nil   # => nil
+  @entry_station = station   # => nil
   @exit_station = nil        # => nil
 end
 
