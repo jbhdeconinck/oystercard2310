@@ -43,7 +43,6 @@ describe Oystercard do
     end
 
     describe '#touch_out' do
-
       before(:each) do
         subject.top_up(1)
         subject.touch_in(station)
@@ -59,7 +58,6 @@ describe Oystercard do
       end
 
     let(:journey){ {:entry_station => station, :exit_station => station} }
-
     it {is_expected.to respond_to(:touch_in).with(1).argument}
 
     it 'checks touching out logs the journey' do

@@ -1,30 +1,57 @@
-require './lib/journey'
+require './lib/journey'  # ~> LoadError: cannot load such file -- ./lib/journey
 
 describe Journey do
 
   let(:station) { double(:station) }
 
-  it 'knows a journey is not complete' do
-    expect(subject).not_to be_complete
+  describe '#incomplete?' do
+    it 'when initializing' do
+      expect(subject).to be_incomplete
+    end
+    it 'when no entry station given' do
+      subject.end_journey(station)
+      expect(subject).to be_incomplete
+    end
+
+    it 'when no exit station given' do
+      subject.start_journey(station)
+      subject.end_journey
+      expect(subject).to be_incomplete
+    end
+
+    it 'when entry and exit station given' do
+      subject.start_journey(station)
+      subject.end_journey(station)
+      expect(subject).not_to be_incomplete
+    end
   end
 
-  context 'when given an entry station' do
+  describe '#start_journey' do
+    it "records entry station" do
+      subject.start_journey(station)
+      expect(subject.entry_station).to eq station
+    end
+  end
 
-      it "records entry station at start of journey" do
-        subject.start_journey(station)
-        expect(subject.entry_station).to eq station
-      end
+  describe '#exit_station' do
+    it "records exit station" do
+      subject.end_journey(station)
+      expect(subject.exit_station).to eq station
+    end
+    it 'returns the journey' do
+      subject.start_journey(station)
+      expect(subject.end_journey(station)).to eq station
+    end
   end
 
   context 'when given an exit station' do
-
     it "records exit station at end of journey" do
       subject.end_journey(station)
       expect(subject.exit_station).to eq station
     end
   end
 
-   describe '#fare' do
+  describe '#fare' do
 
     context 'when both entry and exit station are provided' do
 
@@ -50,5 +77,11 @@ describe Journey do
       end
     end
   end
-
 end
+
+# ~> LoadError
+# ~> cannot load such file -- ./lib/journey
+# ~>
+# ~> /Users/samuel/.rvm/rubies/ruby-2.2.3/lib/ruby/site_ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> /Users/samuel/.rvm/rubies/ruby-2.2.3/lib/ruby/site_ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+# ~> /Users/samuel/MAKERS/course_challenges/oystercard_friday/spec/journey_spec.rb:1:in `<main>'
